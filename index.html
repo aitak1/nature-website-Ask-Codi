@@ -5,149 +5,136 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nature Website</title>
 <style>
-    body {
-        background-color: #e6f5ec;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .nav-bar {
-        background-color: #b3d2c3;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #E8F1E2;
+  margin: 0;
+  padding: 0;
+}
 
-    .search-bar {
-        margin: 0 auto;
-        padding: 5px;
-    }
+.header {
+  background-color: #5C9D72;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .filter-box {
-        position: absolute;
-        top: 60px;
-        right: 10px;
-    }
+.filter-button {
+  margin: 10px;
+}
 
-    .list-item {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
 
-    .list-item:hover {
-        background-color: #d9ead3;
-    }
+.list-item:hover {
+  background-color: #F3F3F3;
+}
 
-    .image {
-        width: 100px;
-        height: 100px;
-        margin-right: 20px;
-        border-radius: 50%;
-    }
+.community-post {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
 
-    .content {
-        flex: 1;
-    }
+.community-post img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
 
-    .description {
-        max-height: 100px;
-        overflow-y: auto;
-    }
+.community-description {
+  margin-left: 10px;
+}
 
-    .add-post {
-        position: absolute;
-        top: 60px;
-        right: 10px;
-        padding: 10px;
-        background-color: #fff;
-        border: none;
-        cursor: pointer;
-        border-radius: 10px;
-    }
+.community-description p {
+  max-height: 100px;
+  overflow: auto;
+}
 
-    .post {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-    }
+.add-comment {
+  margin-top: 10px;
+}
 
-    .add-comment {
-        margin-top: 10px;
-    }
 </style>
 </head>
 <body>
-<div class="nav-bar">
-    <div class="search-bar">
-        <input type="text" placeholder="Search">
-        <button>Search</button>
+<header class="header">
+  <div class="navigation">
+    <input type="text" placeholder="Search...">
+    <button>Search</button>
+  </div>
+  <div class="navigation-tabs">
+    <button class="tab" onclick="showTab('community')">Community</button>
+    <button class="tab" onclick="showTab('explore')">Explore</button>
+  </div>
+</header>
+
+<div id="community-page" style="display:none;">
+  <button>Add Post</button>
+  <div class="community-post">
+    <img src="placeholder.jpg" alt="Post">
+    <div class="community-description">
+      <p>Description of the post goes here. Description of the post goes here. Description of the post goes here.</p>
+      <button class="like-button">Like</button>
+      <button class="add-comment">Add Comment</button>
     </div>
-    <div class="tabs">
-        <button onclick="showCommunityPage()">Community</button>
-        <button onclick="showExplorePage()">Explore</button>
-    </div>
+  </div>
 </div>
 
-<div id="community-page" style="display: none;">
-    <button class="add-post" onclick="showAddPostForm()">Add Post</button>
-    <div id="post-container">
-        <!-- Sample Post -->
-        <div class="post">
-            <img src="https://via.placeholder.com/100" class="image" alt="Sample Image">
-            <div class="content">
-                <p>This is a sample post description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <button class="add-comment">Add Comment</button>
-            </div>
-        </div>
+<div id="explore-page">
+  <div class="filter-button">
+    <button onclick="filterList('plants')">Plants</button>
+    <button onclick="filterList('animals')">Animals</button>
+    <button onclick="filterList('both')">Both</button>
+  </div>
+  <div class="list-item">
+    <img src="plant1.jpg" alt="Plant 1">
+    <div>
+      <h3>Plant 1</h3>
+      <p>Description of Plant 1 goes here.</p>
     </div>
-</div>
-
-<div id="explore-page" style="display: none;">
-    <div class="filter-box">
-        <button>Plants</button>
-        <button>Animals</button>
-        <button>Both</button>
+  </div>
+  <div class="list-item">
+    <img src="animal1.jpg" alt="Animal 1">
+    <div>
+      <h3>Animal 1</h3>
+      <p>Description of Animal 1 goes here.</p>
     </div>
-    <div id="list">
-        <!-- Sample Animal and Plant Data -->
-        <div class="list-item">
-            <img src="https://via.placeholder.com/100" class="image" alt="Sample Image">
-            <div class="content">
-                <h3>Lion</h3>
-                <p>The lion is a species in the family Felidae and a member of the genus Panthera.</p>
-            </div>
-        </div>
-        <div class="list-item">
-            <img src="https://via.placeholder.com/100" class="image" alt="Sample Image">
-            <div class="content">
-                <h3>Rose</h3>
-                <p>A rose is a woody perennial flowering plant of the genus Rosa, in the family Rosaceae.</p>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
 <script>
-    function showCommunityPage() {
-        document.getElementById('community-page').style.display = 'block';
-        document.getElementById('explore-page').style.display = 'none';
-    }
+function showTab(tabName) {
+  var tabs = document.getElementsByClassName('tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+  }
+  document.getElementById(tabName + '-page').style.display = 'block';
+}
 
-    function showExplorePage() {
-        document.getElementById('community-page').style.display = 'none';
-        document.getElementById('explore-page').style.display = 'block';
+function filterList(type) {
+  var items = document.getElementsByClassName('list-item');
+  for (var i = 0; i < items.length; i++) {
+    if (type === 'plants' && !items[i].getElementsByTagName('img')[0].src.includes('plant')) {
+      items[i].style.display = 'none';
+    } else if (type === 'animals' && !items[i].getElementsByTagName('img')[0].src.includes('animal')) {
+      items[i].style.display = 'none';
+    } else {
+      items[i].style.display = 'flex';
     }
-
-    function showAddPostForm() {
-        // Functionality to open add post form
-    }
+  }
+}
 </script>
 </body>
 </html>
+
